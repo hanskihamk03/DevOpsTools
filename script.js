@@ -1,4 +1,7 @@
-const apiUrl = "https://qapi.vercel.app/api/random"; // API for random quotes
+const apiUrls = [
+    "https://qapi.vercel.app/api/random", // First API for quotes
+    "https://quote-generator-api-six.vercel.app" // Second API for quotes
+];
 
 // Hardcoded quotes
 const quotes = [
@@ -19,6 +22,39 @@ const authorText = document.getElementById("author");
 const newQuoteBtn = document.getElementById("new-quote");
 const copyQuoteBtn = document.getElementById("copy-quote");
 
+// Function to calculate the brightness of a color
+function getBrightness(color) {
+    color = color.replace("#", "");
+    const r = parseInt(color.substring(0, 2), 16);
+    const g = parseInt(color.substring(2, 4), 16);
+    const b = parseInt(color.substring(4, 6), 16);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+// Function to generate a random background color
+function getRandomColor(){
+    let letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// Function to change background color and adjust text color
+function changeBackgroundColor() {
+    const backgroundColor = getRandomColor();
+    document.body.style.background = backgroundColor;
+    
+    const brightness = getBrightness(backgroundColor);
+
+    if (brightness > 128) {
+        document.body.style.color = "#000";  // Dark text color for light background
+    } else {
+        document.body.style.color = "#FFF";  // White text color for dark background
+    }
+}
+
 // Function to generate a quote (randomly from API or hardcoded list)
 function generateQuote() {
     const source = Math.random() > 0.5 ? 'api' : 'hardcoded';  // 50% chance of API or hardcoded quote
@@ -29,13 +65,16 @@ function generateQuote() {
             .then(data => {
                 quoteText.textContent = `"${data.quote}"`;
                 authorText.textContent = `- ${data.author || "Unknown"}`;
+                changeBackgroundColor();
             })
             .catch(error => {
                 console.error("Error fetching from API:", error);
                 getHardcodedQuote(); // Fallback to hardcoded quote
+                changeBackgroundColor();
             });
     } else {
         getHardcodedQuote();
+        changeBackgroundColor();
     }
 }
 
