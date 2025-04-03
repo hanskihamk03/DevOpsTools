@@ -8,7 +8,10 @@ const quotes = [
     { text: "Your time is limited, so don’t waste it living someone else’s life.", author: "Steve Jobs" },
     { text: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
     { text: "Everything you can imagine is real.", author: "Pablo Picasso" },
-    { text: "Opportunities don't happen, you create them.", author: "Chris Grosser" }
+    { text: "Opportunities don't happen, you create them.", author: "Chris Grosser" },
+    { text: "A life without love is like a year without spring.", author: "Octavian Paler" },
+    { text: "Nature gives to every time and season some beauties of its own.", author: "Charles Dickens" },
+    { text: "If we had no winter the spring would not be so pleasant.", author: "Anne Bradstreet" }
 ];
 
 const quoteText = document.getElementById("quote");
