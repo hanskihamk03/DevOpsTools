@@ -1,3 +1,6 @@
+const apiUrl = "https://qapi.vercel.app/api/random"; // API for random quotes
+
+// Hardcoded quotes
 const quotes = [
     { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
     { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
@@ -13,8 +16,28 @@ const authorText = document.getElementById("author");
 const newQuoteBtn = document.getElementById("new-quote");
 const copyQuoteBtn = document.getElementById("copy-quote");
 
-// Function to generate a new quote
+// Function to generate a quote (randomly from API or hardcoded list)
 function generateQuote() {
+    const source = Math.random() > 0.5 ? 'api' : 'hardcoded';  // 50% chance of API or hardcoded quote
+
+    if (source === 'api') {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                quoteText.textContent = `"${data.quote}"`;
+                authorText.textContent = `- ${data.author || "Unknown"}`;
+            })
+            .catch(error => {
+                console.error("Error fetching from API:", error);
+                getHardcodedQuote(); // Fallback to hardcoded quote
+            });
+    } else {
+        getHardcodedQuote();
+    }
+}
+
+// Function to fetch a random quote from hardcoded list
+function getHardcodedQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[randomIndex];
 
