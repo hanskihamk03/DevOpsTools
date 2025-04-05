@@ -3,11 +3,6 @@ const apiUrls = [
     "https://quote-generator-api-six.vercel.app" // Second API for quotes
 ];
 
-const imageUrls = [
-    "https://source.unsplash.com/random/800x600", // First API for images
-    "https://picsum.photos/800/600" // Second API for images
-];
-
 // Hardcoded quotes
 const quotes = [
     { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
@@ -26,7 +21,7 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const newQuoteBtn = document.getElementById("new-quote");
 const copyQuoteBtn = document.getElementById("copy-quote");
-const imageContainer = document.getElementById("random-image");
+const randomImage = document.getElementById("random-image");
 
 // Function to calculate the brightness of a color
 function getBrightness(color) {
@@ -61,10 +56,19 @@ function changeBackgroundColor() {
     }
 }
 
-// Function to get a random image
-function generateRandomImage() {
-    const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-    imageContainer.src = randomImageUrl;
+// Function to fetch a random dog image from the Dog CEO API
+function generateRandomDogImage() {
+    const dogApiUrl = "https://dog.ceo/api/breeds/image/random";  
+
+    fetch(dogApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const dogImageUrl = data.message;  // Get the URL of the dog image from the response
+            randomImage.src = dogImageUrl;  // Set the image source to the dog image
+        })
+        .catch(error => {
+            console.error("Error fetching image from Dog CEO API:", error);
+        });
 }
 
 // Function to generate a quote (randomly from API or hardcoded list)
@@ -79,18 +83,18 @@ function generateQuote() {
                 quoteText.textContent = `"${data.quote}"`;
                 authorText.textContent = `- ${data.author || "Unknown"}`;
                 changeBackgroundColor();
-                generateRandomImage(); // Get a new random image
+                generateRandomDogImage(); // Get a new random dog image
             })
             .catch(error => {
                 console.error("Error fetching from API:", error);
                 getHardcodedQuote(); // Fallback to hardcoded quote
                 changeBackgroundColor();
-                generateRandomImage();
+                generateRandomDogImage(); // Fetch a new random dog image
             });
     } else {
         getHardcodedQuote();
         changeBackgroundColor();
-        generateRandomImage();
+        generateRandomDogImage(); // Fetch a new random dog image
     }
 }
 
@@ -120,4 +124,4 @@ copyQuoteBtn.addEventListener("click", copyQuote);
 
 // Generate an initial quote when the page loads
 generateQuote();
-generateRandomImage(); // Get a new random image
+generateRandomDogImage(); // Get a new random dog image

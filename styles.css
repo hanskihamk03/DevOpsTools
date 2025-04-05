@@ -111,14 +111,16 @@ button:hover {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;  /* Ensures the image is vertically centered within the container */
     overflow: hidden;
 }
 
 #random-image {
-    width: 100%;
-    max-width: auto;
-    height: 200px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: block;   /* Ensures the image is not treated like inline */
+    width: 100%;                /* Ensures the image fills the container width */
+    max-width: 500px;           /* Limits the image's width to 500px */
+    height: auto;               /* Maintains the image's aspect ratio */
+    border-radius: 10px;        /* Rounded corners for the image */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds a shadow around the image */
+    display: block;             /* Ensures the image is treated as a block element */
+    object-fit: cover;          /* Ensures the image fills its container, keeping its aspect ratio */
 }
