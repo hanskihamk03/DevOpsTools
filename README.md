@@ -6,6 +6,9 @@ Our Random Quote Generator is a simple yet powerful app that provides daily moti
 
 Here is the link for the website: https://hanskihamk03.github.io/DevOpsTools/quoteGenerator.html
 
+<!-- Minor change for assignment PR -->
+
+
 ### Contributors:
 
 *Ella Heikkinen*
