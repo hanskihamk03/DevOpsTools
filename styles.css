@@ -26,14 +26,20 @@ body {
     left: 50%;
     transform: translateX(-50%); /* Centers the logo */
     width: 150px;
+    width: 100%;
     text-align: center;
+    padding: 20px 0; /* Add some space around */
+}
+
+.logo {
+    width: 150px;  /* Adjust as needed */
+    height: auto;
 }
 
 .logo {
     width: 150px;
     height: auto;
 }
-
 
 .container {
     background: rgba(255, 255, 255, 0.1);
