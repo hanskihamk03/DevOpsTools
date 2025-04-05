@@ -106,3 +106,19 @@ button {
 button:hover {
     opacity: 0.8;
 }
+
+.image-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#random-image {
+    width: 100%;
+    max-width: auto;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: block;   /* Ensures the image is not treated like inline */
+}

@@ -3,6 +3,11 @@ const apiUrls = [
     "https://quote-generator-api-six.vercel.app" // Second API for quotes
 ];
 
+const imageUrls = [
+    "https://source.unsplash.com/random/800x600", // First API for images
+    "https://picsum.photos/800/600" // Second API for images
+];
+
 // Hardcoded quotes
 const quotes = [
     { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
@@ -21,6 +26,7 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const newQuoteBtn = document.getElementById("new-quote");
 const copyQuoteBtn = document.getElementById("copy-quote");
+const imageContainer = document.getElementById("random-image");
 
 // Function to calculate the brightness of a color
 function getBrightness(color) {
@@ -55,26 +61,36 @@ function changeBackgroundColor() {
     }
 }
 
+// Function to get a random image
+function generateRandomImage() {
+    const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+    imageContainer.src = randomImageUrl;
+}
+
 // Function to generate a quote (randomly from API or hardcoded list)
 function generateQuote() {
     const source = Math.random() > 0.5 ? 'api' : 'hardcoded';  // 50% chance of API or hardcoded quote
 
     if (source === 'api') {
+        const apiUrl = apiUrls[Math.floor(Math.random() * apiUrls.length)];
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
                 quoteText.textContent = `"${data.quote}"`;
                 authorText.textContent = `- ${data.author || "Unknown"}`;
                 changeBackgroundColor();
+                generateRandomImage(); // Get a new random image
             })
             .catch(error => {
                 console.error("Error fetching from API:", error);
                 getHardcodedQuote(); // Fallback to hardcoded quote
                 changeBackgroundColor();
+                generateRandomImage();
             });
     } else {
         getHardcodedQuote();
         changeBackgroundColor();
+        generateRandomImage();
     }
 }
 
@@ -104,3 +120,4 @@ copyQuoteBtn.addEventListener("click", copyQuote);
 
 // Generate an initial quote when the page loads
 generateQuote();
+generateRandomImage(); // Get a new random image
